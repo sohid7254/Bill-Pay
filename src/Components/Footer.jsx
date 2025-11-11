@@ -6,16 +6,12 @@ import { FaInstagram, FaXTwitter } from "react-icons/fa6";
 import { FiMapPin } from "react-icons/fi";
 import { IoIosMailOpen } from "react-icons/io";
 import { FaPhoneAlt } from "react-icons/fa";
+import { Link } from "react-router";
 
 // Footer component
 const Footer = () => {
-    
-    
-
-    
     const headingClass = "text-lg font-semibold mb-4 border-b-2 border-b-current pb-2 w-2/4 sm:w-1/3 md:w-1/2 lg:w-3/4  text-gray-100";
 
-    
     const linkClass = "text-gray-200 hover:text-[#8559ff] transition duration-200 cursor-pointer text-sm mb-2 flex items-center";
 
     return (
@@ -34,24 +30,24 @@ const Footer = () => {
                         <h4 className={headingClass}>Quick Links</h4>
                         <ul className="space-y-2">
                             <li>
-                                <a href="#" className={linkClass}>
+                                <Link to={"/"} className={linkClass}>
                                     Home
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className={linkClass}>
+                                <Link href="#" className={linkClass}>
                                     About
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className={linkClass}>
+                                <Link href="#" className={linkClass}>
                                     Blog
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className={linkClass}>
+                                <Link href="#" className={linkClass}>
                                     Contact
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -60,14 +56,14 @@ const Footer = () => {
                         <h4 className={headingClass}>Company Policy</h4>
                         <ul className="space-y-2">
                             <li>
-                                <a href="#" className={linkClass}>
+                                <Link href="#" className={linkClass}>
                                     Terms and Conditions
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#" className={linkClass}>
+                                <Link href="#" className={linkClass}>
                                     Privacy Policy
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -97,18 +93,21 @@ const Footer = () => {
                     <div>
                         <h4 className={headingClass}>Social Links</h4>
                         <div className="flex items-center space-x-3">
-                            <a href="#" className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-[#8559ff] transition duration-300">
+                            <Link href="#" className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-[#8559ff] transition duration-300">
                                 <SlSocialFacebook size={20} />
-                            </a>
-                            <a href="#" className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-[#8559ff] transition duration-300">
+                            </Link>
+
+                            <Link href="#" className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-[#8559ff] transition duration-300">
                                 <GrLinkedinOption size={20} />
-                            </a>
-                            <a href="#" className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-[#8559ff] transition duration-300">
+                            </Link>
+
+                            <Link href="#" className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-[#8559ff] transition duration-300">
                                 <FaXTwitter size={20} />
-                            </a>
-                            <a href="#" className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-[#8559ff] transition duration-300">
+                            </Link>
+
+                            <Link href="#" className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-[#8559ff] transition duration-300">
                                 <FaInstagram size={20} />
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
