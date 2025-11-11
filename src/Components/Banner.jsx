@@ -49,7 +49,7 @@ const Banner = () => {
 
     return (
         <div className="overflow-hidden mt-3">
-            <div className="w-full relative overflow-hidden rounded-2xl shadow-xl">
+            <div className="w-full relative overflow-hidden rounded-lg shadow-xl">
                 {/* Slide Content */}
                 <div
                     className="relative flex items-center justify-center h-64 sm:h-80 lg:h-[400px] text-white transition-all duration-700 ease-in-out"
@@ -59,27 +59,27 @@ const Banner = () => {
                         backgroundPosition: "center",
                     }}
                 >
-                    {/* Overlay */}
+                    
                     <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
 
-                    {/* Text */}
+                    
                     <div className="max-w-3xl text-center relative z-10 px-4">
                         <p className="text-xl sm:text-3xl font-extrabold mb-3">{currentSlide.message}</p>
                         <p className="text-sm sm:text-lg font-light opacity-80">{currentSlide.tagline}</p>
                     </div>
                 </div>
 
-                {/* Navigation Arrows */}
+                
                 <div className="absolute inset-0 flex items-center justify-between px-2 sm:px-4 z-20">
-                    <button onClick={goToPrevSlide} aria-label="Previous Slide" className="p-2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white rounded-full transition duration-300 backdrop-blur-sm">
-                        <ChevronLeft size={24} />
+                    <button onClick={goToPrevSlide} aria-label="Previous Slide" className="text-white cursor-pointer">
+                        <ChevronLeft size={15} />
                     </button>
-                    <button onClick={goToNextSlide} aria-label="Next Slide" className="p-2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white rounded-full transition duration-300 backdrop-blur-sm">
-                        <ChevronRight size={24} />
+                    <button onClick={goToNextSlide} aria-label="Next Slide" className="text-white cursor-pointer">
+                        <ChevronRight size={15} />
                     </button>
                 </div>
 
-                {/* Pagination Dots */}
+                
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-20">
                     {bannerSlides.map((_, index) => (
                         <button key={index} onClick={() => setCurrentSlideIndex(index)} aria-label={`Go to slide ${index + 1}`} className={`h-3 w-3 rounded-full transition-all duration-300 ${currentSlideIndex === index ? "bg-white scale-110" : "bg-white bg-opacity-50"}`}>

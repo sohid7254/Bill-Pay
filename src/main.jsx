@@ -5,6 +5,7 @@ import AuthProvider from './Context/AuthProvider'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import MainLayouts from './Layout/MainLayouts'
 import Home from './Pages/Home'
+import LogIn from './Pages/LogIn'
 
 
 const router = createBrowserRouter([
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Home/>
       },
+      {
+        path: "/login",
+        element: <LogIn/>
+      }
       
     ]
   }
