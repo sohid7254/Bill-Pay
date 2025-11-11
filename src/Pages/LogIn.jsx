@@ -1,12 +1,43 @@
-import React from 'react';
+import React, { use, useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
+import { AuthContext } from '../Context/AuthContext';
+import Swal from 'sweetalert2';
 
 const LogIn = () => {
+    const {signIn, googleLogin} = use(AuthContext)
+    const [error, setError] = useState("")
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
+    const handleLogIn = (e) => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+
+        signIn(email, password)
+            .then(() => {
+                Swal.fire("LogIn Successfull!", "", "success");
+                navigate(from, {replace: true})
+            })
+            .catch(err => setError(err.message))
+    }
+
+    const handleGoogleLogIn = () =>{
+        googleLogin()
+            .then(() => {
+                Swal.fire("Google LogIn Successfull", "", "success")
+                navigate(from, {replace:true})
+            })
+            .catch(err => setError(err.message))
+    }
+
+
     return (
         <div className="max-w-md mx-auto mt-10 p-6 shadow-md bg-base-100 rounded">
             <h2 className="text-2xl  font-bold mb-4 text-center">Login to your Account!</h2>
-            <form>
+            <form onSubmit={handleLogIn}>
                 <label className="text-xl font-semibold">Your Email:</label>
                 <input type="email" name="email" placeholder="Email" className="input input-bordered w-full mb-3" required />
                 <label className="text-xl font-semibold">Your Password:</label>
@@ -14,15 +45,24 @@ const LogIn = () => {
                 <button type="submit" className="btn text-white bg-[#8f6ded] w-full hover:bg-[#b09adc]">
                     Login
                 </button>
+                {error && <p className="text-red-500 mt-2">{error}</p>}
             </form>
             <div className="mt-4 text-center">
+                <p>
+                    Forgot Your Password! <span className="text-purple-500">Reset Password</span>
+                </p>
+                <span>
+                    Or
+                </span>
+            </div>
+            <div className="text-center">
                 <p>
                     Don't have an account?{" "}
                     <Link to="/register" className="hover:text-[#8559ff]">
                         Register
                     </Link>
                 </p>
-                <button className="btn text-white border-[#e5e5e5] mt-5 bg-[#856dc7] hover:bg-[#a08bca]">
+                <button onClick={handleGoogleLogIn} className="btn text-white border-[#e5e5e5] mt-5 bg-[#856dc7] hover:bg-[#a08bca]">
                     <FcGoogle className="w-7 h-7" /> Login with Google
                 </button>
             </div>
