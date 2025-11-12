@@ -38,6 +38,10 @@ const Navbar = () => {
                     <NavLink to="/bills" className={linkStyle}>
                         Bills
                     </NavLink>
+                    <NavLink to="/FAQ" className={linkStyle}>
+                        FAQ
+                    </NavLink>
+
                     {user && (
                         <>
                         <NavLink to="/myBills" className={linkStyle}>
@@ -47,6 +51,10 @@ const Navbar = () => {
                         <Link to="/addBills" className={linkStyle}>
                             Add Bills
                         </Link>
+                        <Link to="/user" className={linkStyle}>
+                            User
+                        </Link>
+                        
                         </>
                         
                     )}
