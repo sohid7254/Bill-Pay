@@ -1,0 +1,146 @@
+import React, { use, useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import { AuthContext } from '../Context/AuthContext';
+import Swal from 'sweetalert2';
+
+
+const BillsDetails = () => {
+    const {id} = useParams();
+    const [bill, setBill] = useState(null)
+    
+    const {user} = use(AuthContext)
+
+
+    useEffect(()=>{
+        fetch(`http://localhost:3000/billsDetails/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                setBill(data)
+            })
+            .catch(err => console.error(err.message))
+    },[id])
+
+    if(!bill) return <p className='text-center mt-10'>Loading....</p>
+
+    const billMonth = new Date(bill.date).getMonth();
+    const currentMonth = new Date().getMonth();
+    const isCurrentMonth = billMonth === currentMonth;
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const payData = {
+            email: user?.email,
+            billId: bill._id,
+            amount: bill.amount,
+            username: e.target.username.value,
+            address: e.target.address.value,
+            phone: e.target.phone.value,
+            date: new Date().toISOString().split("T")[0],
+            info: e.target.info.value
+        }
+
+        fetch("http://localhost:3000/payments",{
+            method: "POST",
+            headers: {
+                "content-type" : "application/json"
+            },
+            body: JSON.stringify(payData)
+        })
+          .then(res => res.json())
+          .then(() => {
+            Swal.fire("Success", "Bill Paid Successfully", "success")
+            
+          })
+          .catch(err => console.error(err))
+    }
+    return (
+        <div className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative">
+            {/* Left Side - Image */}
+            {bill.image && (
+                <div>
+                    <img src={bill.image} alt={bill.title} className="w-full h-96 object-cover rounded-lg shadow-md" />
+                </div>
+            )}
+
+            {/* Right Side - Details */}
+            <div className="flex flex-col justify-between h-full">
+                <div>
+                    <h2 className="text-2xl font-bold text-[#8559ff] mb-4">{bill.title}</h2>
+                    <p className="mb-2">
+                        <strong>Category:</strong> {bill.category}
+                    </p>
+                    <p className="mb-2">
+                        <strong>Location:</strong> {bill.location}
+                    </p>
+                    <p className="mb-2">
+                        <strong>Amount:</strong> {bill.amount} ৳
+                    </p>
+                    <p className="mb-2">
+                        <strong>Date:</strong> {bill.date}
+                    </p>
+                    <p className="mt-4 text-gray-700">{bill.description}</p>
+                </div>
+
+                {/* Pay Bill Button */}
+                <div className="mt-6">
+                    {isCurrentMonth ? (
+                        <button onClick={() => document.getElementById("pay_modal").showModal()} className="btn btn-primary w-full md:w-auto">
+                            Pay Bill
+                        </button>
+                    ) : (
+                        <button disabled className="btn btn-disabled w-full md:w-auto">
+                            Only current month bills can be paid
+                        </button>
+                    )}
+                </div>
+            </div>
+
+            {/* Modal */}
+
+            <dialog id="pay_modal" className="modal">
+                <div className="modal-box max-w-3xl">
+                    <h3 className="font-bold text-lg mb-4 text-center">Pay Bill</h3>
+                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="font-bold">Email:</label>
+                            <input type="email" value={user?.email} readOnly className="input input-bordered w-full" />
+                            <label className="font-bold">Bill ID:</label>
+                            <input type="text" value={bill._id} readOnly className="input input-bordered w-full" />
+                            <label className="font-bold">Bill Amount:</label>
+                            <input type="text" value={bill.amount} readOnly className="input input-bordered w-full" />
+                            <label className="font-bold">UserName:</label>
+                            <input type="text" name="username" placeholder="Username" className="input input-bordered w-full" required />
+                        </div>
+
+                        {/* Right Column */}
+                        <div className="space-y-2">
+                            <label className="font-bold">Address:</label>
+                            <input type="text" name="address" placeholder="Address" className="input input-bordered w-full" required />
+                            <label className="font-bold">Phone:</label>
+                            <input type="text" name="phone" placeholder="Phone" className="input input-bordered w-full" required />
+                            <label className="font-bold">Paid at:</label>
+                            <input type="text" value={new Date().toISOString().split("T")[0]} readOnly className="input input-bordered w-full" />
+                            <label className="font-bold">Info:</label>
+                            <textarea name="info" placeholder="Additional info" className="textarea textarea-bordered w-full"></textarea>
+                        </div>
+
+                        {/* Submit Button Full Width */}
+                        <div className="col-span-1 md:col-span-2">
+                            <button type="submit" className="btn btn-success w-full">
+                                Submit Payment
+                            </button>
+                        </div>
+                    </form>
+
+                    <div className="modal-action">
+                        <form method="dialog" className="w-full">
+                            <button className="btn btn-outline w-full">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+        </div>
+    );
+};
+
+export default BillsDetails;

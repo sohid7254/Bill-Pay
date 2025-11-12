@@ -9,37 +9,42 @@ import LogIn from './Pages/LogIn'
 import Register from './Pages/Register'
 import NotFound from './Pages/NotFound'
 import Bills from './Pages/Bills'
+import BillsDetails from './Pages/BillsDetails'
 
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <MainLayouts/>,
-    children:[
-      {
-        index: true,
-        element: <Home/>
-      },
-      {
-        path: "/login",
-        element: <LogIn/>
-      },
-      {
-        path: "/register",
-        element: <Register/>
-      },
-      {
-        path: "/bills",
-        element:<Bills/>
-      }
-      
-    ]
-  },
-  {
-    path: "*",
-    element: <NotFound/>
-  }
-])
+    {
+        path: "/",
+        element: <MainLayouts />,
+        children: [
+            {
+                index: true,
+                element: <Home />,
+            },
+            {
+                path: "/login",
+                element: <LogIn />,
+            },
+            {
+                path: "/register",
+                element: <Register />,
+            },
+            {
+                path: "/bills",
+                element: <Bills />,
+            },
+            {
+                path: "/billsDetails/:id",
+                loader: ({ params }) => fetch(`http://localhost:3000/bills/${params.id}`),
+                element: <BillsDetails/>
+            },
+        ],
+    },
+    {
+        path: "*",
+        element: <NotFound />,
+    },
+]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

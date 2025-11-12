@@ -42,7 +42,7 @@ const Bills = () => {
             {/* Grid Layout */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {bills.map((bill) => (
-                    <BillCardFull key={bill._id} bill={bill} onDetails={() => navigate(`/bills/${bill._id}`)} />
+                    <BillCardFull key={bill._id} bill={bill} onDetails={() => navigate(`/billsDetails/${bill._id}`)} />
                 ))}
             </div>
         </div>

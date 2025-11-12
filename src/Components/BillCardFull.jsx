@@ -1,3 +1,5 @@
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
+
 const BillCardFull = ({ bill, onDetails }) => {
     const { title, category, location, date, image, amount, _id } = bill;
 
@@ -18,11 +20,16 @@ const BillCardFull = ({ bill, onDetails }) => {
                         Category: <span className="bg-[#f3edff] border border-purple-200 px-2 rounded-lg text-sm font-semibold text-center text-[#8559ff]">{category}</span>
                     </p>
                     <p className="text-sm text-gray-600 mb-1">Location: {location}</p>
-                    <p className="text-sm text-gray-600 mb-1">Amount: {amount} ৳</p>
+                    <p className="text-sm text-gray-600 mb-1 flex">
+                        Amount:
+                        <span className="flex items-center">
+                            <FaBangladeshiTakaSign /> {amount}
+                        </span>
+                    </p>
                     <p className="text-sm text-gray-400 mb-3">Date: {date}</p>
                 </div>
 
-                <button onClick={onDetails ? onDetails : () => console.log("See details for:", _id)} className="btn btn-outline btn-sm text-[#8559ff] border-[#8559ff] mt-4">
+                <button onClick={onDetails} className="btn btn-outline btn-sm text-[#8559ff] border-[#8559ff] mt-4">
                     See Details
                 </button>
             </div>
