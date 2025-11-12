@@ -17,7 +17,7 @@ const BillCard = ({ bill, onDetails }) => {
                     <p className="text-sm text-gray-400 mb-3">Date: {date}</p>
                 </div>
 
-                <button onClick={onDetails} className="btn btn-outline btn-sm text-[#8559ff] border-[#8559ff] mt-4">
+                <button onClick={onDetails} className="btn btn-sm bg-[#f3edff] mt-4">
                     See Details
                 </button>
             </div>

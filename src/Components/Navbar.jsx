@@ -39,9 +39,16 @@ const Navbar = () => {
                         Bills
                     </NavLink>
                     {user && (
-                        <NavLink to="/mypaybills" className={linkStyle}>
-                            My Pay Bills
+                        <>
+                        <NavLink to="/myBills" className={linkStyle}>
+                            My Bills
                         </NavLink>
+
+                        <Link to="/addBills" className={linkStyle}>
+                            Add Bills
+                        </Link>
+                        </>
+                        
                     )}
                 </div>
 
@@ -101,7 +108,7 @@ const Navbar = () => {
                         </NavLink>
                         {user && (
                             <NavLink to="/mypaybills" className={linkStyle} onClick={() => setMenuOpen(false)}>
-                                My Pay Bills
+                                My Bills
                             </NavLink>
                         )}
                         {user && (

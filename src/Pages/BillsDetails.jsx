@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { AuthContext } from '../Context/AuthContext';
 import Swal from 'sweetalert2';
+import { FaBangladeshiTakaSign } from 'react-icons/fa6';
 
 
 const BillsDetails = () => {
@@ -20,7 +21,14 @@ const BillsDetails = () => {
             .catch(err => console.error(err.message))
     },[id])
 
-    if(!bill) return <p className='text-center mt-10'>Loading....</p>
+    if(!bill) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <span className="loading loading-bars loading-xl scale-150"></span>
+            </div>
+        );
+
+    }
 
     const billMonth = new Date(bill.date).getMonth();
     const currentMonth = new Date().getMonth();
@@ -36,7 +44,8 @@ const BillsDetails = () => {
             address: e.target.address.value,
             phone: e.target.phone.value,
             date: new Date().toISOString().split("T")[0],
-            info: e.target.info.value
+            info: e.target.info.value,
+            status: "Active"
         }
 
         fetch("http://localhost:3000/payments",{
@@ -48,6 +57,8 @@ const BillsDetails = () => {
         })
           .then(res => res.json())
           .then(() => {
+            
+            document.getElementById("pay_modal").close();
             Swal.fire("Success", "Bill Paid Successfully", "success")
             
           })
@@ -67,14 +78,19 @@ const BillsDetails = () => {
                 <div>
                     <h2 className="text-2xl font-bold text-[#8559ff] mb-4">{bill.title}</h2>
                     <p className="mb-2">
-                        <strong>Category:</strong> {bill.category}
+                        <strong>Category:</strong> <span className="bg-[#f3edff] border border-purple-200 px-2 rounded-lg text-sm font-semibold text-center text-[#8559ff]">{bill.category}</span>
                     </p>
                     <p className="mb-2">
                         <strong>Location:</strong> {bill.location}
                     </p>
-                    <p className="mb-2">
-                        <strong>Amount:</strong> {bill.amount} ৳
+                    <p className="mb-4 flex items-center">
+                        <strong className="text-gray-700">Amount:</strong>
+                        <span className="flex items-center gap-1 px-3 py-1 rounded-lg text-base font-semibold text-gray-700">
+                            <FaBangladeshiTakaSign className="text-gray-600" />
+                            <span className="bg-[#f7ff85] border border-purple-200 px-2 rounded-md text-gray-700">{bill.amount}</span>
+                        </span>
                     </p>
+
                     <p className="mb-2">
                         <strong>Date:</strong> {bill.date}
                     </p>
@@ -84,7 +100,7 @@ const BillsDetails = () => {
                 {/* Pay Bill Button */}
                 <div className="mt-6">
                     {isCurrentMonth ? (
-                        <button onClick={() => document.getElementById("pay_modal").showModal()} className="btn btn-primary w-full md:w-auto">
+                        <button onClick={() => document.getElementById("pay_modal").showModal()} className="btn bg-[#f3edff] w-full md:w-50 hover:bg-[#af85ff]">
                             Pay Bill
                         </button>
                     ) : (
@@ -126,7 +142,7 @@ const BillsDetails = () => {
 
                         {/* Submit Button Full Width */}
                         <div className="col-span-1 md:col-span-2">
-                            <button type="submit" className="btn btn-success w-full">
+                            <button type="submit" className="btn bg-[#8559ff] text-white w-full">
                                 Submit Payment
                             </button>
                         </div>

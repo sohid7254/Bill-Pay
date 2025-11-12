@@ -20,16 +20,17 @@ const BillCardFull = ({ bill, onDetails }) => {
                         Category: <span className="bg-[#f3edff] border border-purple-200 px-2 rounded-lg text-sm font-semibold text-center text-[#8559ff]">{category}</span>
                     </p>
                     <p className="text-sm text-gray-600 mb-1">Location: {location}</p>
-                    <p className="text-sm text-gray-600 mb-1 flex">
-                        Amount:
-                        <span className="flex items-center">
-                            <FaBangladeshiTakaSign /> {amount}
+                    <p className="mb-4 flex items-center">
+                        <strong className="text-gray-700">Amount:</strong>
+                        <span className="flex items-center gap-1 px-3 py-1 rounded-lg text-base font-semibold text-gray-700">
+                            <FaBangladeshiTakaSign className="text-gray-600" />
+                            <span className="bg-[#f7ff85] border border-purple-200 px-2 rounded-md text-gray-700 ">{amount}</span>
                         </span>
                     </p>
                     <p className="text-sm text-gray-400 mb-3">Date: {date}</p>
                 </div>
 
-                <button onClick={onDetails} className="btn btn-outline btn-sm text-[#8559ff] border-[#8559ff] mt-4">
+                <button onClick={onDetails} className="btn btn-sm bg-[#f3edff] mt-4">
                     See Details
                 </button>
             </div>

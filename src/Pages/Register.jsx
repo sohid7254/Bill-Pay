@@ -28,6 +28,23 @@ const Register = () => {
         createUser(email, password)
             .then(res => {
                 updateUser({displayName: name, photoURL})
+                const newUser = {
+                    name: res.user.displayName,
+                    email: res.user.email,
+                    image: res.user.photoURL,
+                };
+                // creat user on db
+                fetch("http://localhost:3000/users", {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                    },
+                    body: JSON.stringify(newUser),
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        console.log("New USers data has saved", data);
+                    });
                 Swal.fire("Registeration Successfull", "","success")
                 navigate(from, {replace: true})
                 console.log(res)
@@ -72,7 +89,7 @@ const Register = () => {
                 <input type="email" name="email" placeholder="Email" className="input input-bordered w-full mb-3" required />
 
                 <label className="text-xl font-semibold">Photo Url:</label>
-                <input type="text" name="photoURL" placeholder="Photo URL" className="input input-bordered w-full mb-3" required />
+                <input type="text" name="photoURL" placeholder="Photo URL" className="input input-bordered w-full mb-3"/>
 
                 <label className="text-xl font-semibold">Password:</label>
                 <input type="password" name="password" placeholder="Password" className="input input-bordered w-full mb-3" required />
