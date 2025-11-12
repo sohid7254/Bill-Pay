@@ -28,7 +28,7 @@ const Home = () => {
                 <h2 className="md:text-3xl lg:4xl text-xl font-semibold text-center mt-5">Recent Bills</h2>
 
                 <div className=" mt-10 px-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {latestBills.map((bill) => (
                             <BillCard key={bill._id} bill={bill}></BillCard>
                         ))}
