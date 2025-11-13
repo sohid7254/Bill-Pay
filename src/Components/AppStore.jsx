@@ -16,12 +16,13 @@ const AppStore = () => {
                 </div>
 
                 
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 text-black
+                ">
                     <Link to="#" className="flex items-center gap-2 bg-white shadow-md px-4 py-3 rounded-lg hover:shadow-lg transition">
                         <IoLogoGooglePlaystore className="text-3xl text-purple-400" />
                         <span className="text-sm leading-tight">
                             Download on <br />
-                            <span className="font-bold text-base sm:text-lg">Google Play</span>
+                            <span className="font-bold text-base-co sm:text-lg">Google Play</span>
                         </span>
                     </Link>
                     <Link to="#" className="flex items-center gap-2 bg-white shadow-md px-4 py-3 rounded-lg hover:shadow-lg transition">

@@ -6,12 +6,11 @@ import Swal from "sweetalert2";
 import { Helmet } from "@dr.pogodin/react-helmet";
 
 const Register = () => {
-    const {createUser, updateUser, googleLogin} = use(AuthContext)
-    const [error, setError] = useState("")
+    const { createUser, updateUser, googleLogin } = use(AuthContext);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
-
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -21,21 +20,21 @@ const Register = () => {
         const password = e.target.password.value;
 
         const passwordValid = /(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(password);
-        if(!passwordValid) {
+        if (!passwordValid) {
             setError("Password must be at least 6 character, including uppercase and loawercase");
-            return
+            return;
         }
 
         createUser(email, password)
-            .then(res => {
-                updateUser({displayName: name, photoURL})
+            .then((res) => {
+                updateUser({ displayName: name, photoURL });
                 const newUser = {
                     name: res.user.displayName,
                     email: res.user.email,
                     image: res.user.photoURL,
                 };
                 // creat user on db
-                fetch("http://localhost:3000/users", {
+                fetch("https://assignment10-server-beta-weld.vercel.app/users", {
                     method: "POST",
                     headers: {
                         "content-type": "application/json",
@@ -46,45 +45,43 @@ const Register = () => {
                     .then((data) => {
                         console.log("New USers data has saved", data);
                     });
-                Swal.fire("Registeration Successfull", "","success")
-                navigate(from, {replace: true})
-                console.log(res)
+                Swal.fire("Registeration Successfull", "", "success");
+                navigate(from, { replace: true });
+                console.log(res);
             })
-            .catch(err => setError(err.message))
-    }
+            .catch((err) => setError(err.message));
+    };
 
-    const handleGoogleLogIn =() =>{
+    const handleGoogleLogIn = () => {
         googleLogin()
-            .then(res => {
-                console.log(res.user)
+            .then((res) => {
+                console.log(res.user);
                 const newUser = {
                     name: res.user.displayName,
                     email: res.user.email,
-                    image: res.user.photoURL
-                }
+                    image: res.user.photoURL,
+                };
                 // creat user on db
-                fetch("http://localhost:3000/users",{
-                    method: 'POST',
+                fetch("https://assignment10-server-beta-weld.vercel.app/users", {
+                    method: "POST",
                     headers: {
-                        'content-type' : 'application/json'
+                        "content-type": "application/json",
                     },
-                    body: JSON.stringify(newUser)
+                    body: JSON.stringify(newUser),
                 })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log('New USers data has saved', data)
-                    })
-                Swal.fire("Google Registeration Successfull", "", "success")
-                navigate(from, {replace: true})
+                    .then((res) => res.json())
+                    .then((data) => {
+                        console.log("New USers data has saved", data);
+                    });
+                Swal.fire("Google Registeration Successfull", "", "success");
+                navigate(from, { replace: true });
             })
-            .catch(err => setError(err.message))
-    }
+            .catch((err) => setError(err.message));
+    };
     return (
         <div className="max-w-md mx-auto mt-10 p-6 shadow-lg bg-base-100 rounded">
             <Helmet>
-                <title>
-                    Register
-                </title>
+                <title>Register</title>
             </Helmet>
             <h2 className="text-2xl font-bold mb-4 text-center">Register to Brgin!!</h2>
             <form onSubmit={handleRegister}>
@@ -95,7 +92,7 @@ const Register = () => {
                 <input type="email" name="email" placeholder="Email" className="input input-bordered w-full mb-3" required />
 
                 <label className="text-xl font-semibold">Photo Url:</label>
-                <input type="text" name="photoURL" placeholder="Photo URL" className="input input-bordered w-full mb-3"/>
+                <input type="text" name="photoURL" placeholder="Photo URL" className="input input-bordered w-full mb-3" />
 
                 <label className="text-xl font-semibold">Password:</label>
                 <input type="password" name="password" placeholder="Password" className="input input-bordered w-full mb-3" required />

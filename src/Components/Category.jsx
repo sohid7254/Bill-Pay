@@ -12,7 +12,7 @@ const Category = () => {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div
-                    className="bg-[#e8eefc] p-6 rounded-lg  shadow-sm 
+                    className="bg-[#e8eefc] text-black  p-6 rounded-lg  shadow-sm 
                        hover:scale-105
                        hover:bg-[#eae7fc] 
                        transition duration-300 ease-in-out"
@@ -23,7 +23,7 @@ const Category = () => {
                     </div>
                 </div>
                 <div
-                    className="bg-[#e8eefc] p-6 rounded-lg text-center shadow-sm 
+                    className="bg-[#e8eefc] text-black p-6 rounded-lg text-center shadow-sm 
                        hover:scale-105
                        hover:bg-[#eae7fc] 
                        transition duration-300 ease-in-out"
@@ -34,7 +34,7 @@ const Category = () => {
                     </div>
                 </div>
                 <div
-                    className="bg-[#e8eefc] p-6 rounded-lg text-center shadow-sm 
+                    className="bg-[#e8eefc] text-black p-6 rounded-lg text-center shadow-sm 
                        hover:scale-105
                        hover:bg-[#eae7fc] 
                        transition duration-300 ease-in-out"
@@ -45,7 +45,7 @@ const Category = () => {
                     </div>
                 </div>
                 <div
-                    className="bg-[#e8eefc] p-6 rounded-lg text-center shadow-sm 
+                    className="bg-[#e8eefc] text-black p-6 rounded-lg text-center shadow-sm 
                        hover:scale-105
                        hover:bg-[#eae7fc]
                        transition duration-300 ease-in-out"

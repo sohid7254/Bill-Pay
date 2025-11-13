@@ -1,34 +1,31 @@
-import React, { use, useEffect, useState } from 'react';
-import { useParams } from 'react-router';
-import { AuthContext } from '../Context/AuthContext';
-import Swal from 'sweetalert2';
-import { FaBangladeshiTakaSign } from 'react-icons/fa6';
-import { Helmet } from '@dr.pogodin/react-helmet';
-
+import React, { use, useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
+import Swal from "sweetalert2";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
+import { Helmet } from "@dr.pogodin/react-helmet";
 
 const BillsDetails = () => {
-    const {id} = useParams();
-    const [bill, setBill] = useState(null)
-    
-    const {user} = use(AuthContext)
+    const { id } = useParams();
+    const [bill, setBill] = useState(null);
 
+    const { user } = use(AuthContext);
 
-    useEffect(()=>{
-        fetch(`http://localhost:3000/billsDetails/${id}`)
-            .then(res => res.json())
-            .then(data => {
-                setBill(data)
+    useEffect(() => {
+        fetch(`https://assignment10-server-beta-weld.vercel.app/billsDetails/${id}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setBill(data);
             })
-            .catch(err => console.error(err.message))
-    },[id])
+            .catch((err) => console.error(err.message));
+    }, [id]);
 
-    if(!bill) {
+    if (!bill) {
         return (
             <div className="flex justify-center items-center h-screen">
                 <span className="loading loading-bars loading-xl scale-150"></span>
             </div>
         );
-
     }
 
     const billMonth = new Date(bill.date).getMonth();
@@ -46,25 +43,23 @@ const BillsDetails = () => {
             phone: e.target.phone.value,
             date: new Date().toISOString().split("T")[0],
             info: e.target.info.value,
-            status: "Active"
-        }
+            status: "Active",
+        };
 
-        fetch("http://localhost:3000/payments",{
+        fetch("https://assignment10-server-beta-weld.vercel.app/payments", {
             method: "POST",
             headers: {
-                "content-type" : "application/json"
+                "content-type": "application/json",
             },
-            body: JSON.stringify(payData)
+            body: JSON.stringify(payData),
         })
-          .then(res => res.json())
-          .then(() => {
-            
-            document.getElementById("pay_modal").close();
-            Swal.fire("Success", "Bill Paid Successfully", "success")
-            
-          })
-          .catch(err => console.error(err))
-    }
+            .then((res) => res.json())
+            .then(() => {
+                document.getElementById("pay_modal").close();
+                Swal.fire("Success", "Bill Paid Successfully", "success");
+            })
+            .catch((err) => console.error(err));
+    };
     return (
         <div className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative">
             <Helmet>
@@ -88,9 +83,9 @@ const BillsDetails = () => {
                         <strong>Location:</strong> {bill.location}
                     </p>
                     <p className="mb-4 flex items-center">
-                        <strong className="text-gray-700">Amount:</strong>
+                        <strong className="text-base-content">Amount:</strong>
                         <span className="flex items-center gap-1 px-3 py-1 rounded-lg text-base font-semibold text-gray-700">
-                            <FaBangladeshiTakaSign className="text-gray-600" />
+                            <FaBangladeshiTakaSign className="text-base-content" />
                             <span className="bg-[#f7ff85] border border-purple-200 px-2 rounded-md text-gray-700">{bill.amount}</span>
                         </span>
                     </p>
@@ -98,13 +93,13 @@ const BillsDetails = () => {
                     <p className="mb-2">
                         <strong>Date:</strong> {bill.date}
                     </p>
-                    <p className="mt-4 text-gray-700">{bill.description}</p>
+                    <p className="mt-4 text-base-content">{bill.description}</p>
                 </div>
 
                 {/* Pay Bill Button */}
                 <div className="mt-6">
                     {isCurrentMonth ? (
-                        <button onClick={() => document.getElementById("pay_modal").showModal()} className="btn bg-[#f3edff] w-full md:w-50 hover:bg-[#af85ff]">
+                        <button onClick={() => document.getElementById("pay_modal").showModal()} className="btn bg-[#f3edff] text-black w-full md:w-50 hover:bg-[#af85ff]">
                             Pay Bill
                         </button>
                     ) : (

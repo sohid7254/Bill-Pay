@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useNavigate } from "react-router";
+
 import BillCardFull from "../Components/BillCardFull";
 import { Helmet } from "@dr.pogodin/react-helmet";
 
@@ -8,11 +8,11 @@ const Bills = () => {
     const [bills, setBills] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [loading, setloading] = useState(true);
-    const navigate = useNavigate();
+    
 
     useEffect(() => {
         setloading(true);
-        let url = "http://localhost:3000/bills";
+        let url = "https://assignment10-server-beta-weld.vercel.app/bills";
         if (selectedCategory) {
             url += `?category=${selectedCategory}`;
         }
@@ -62,7 +62,7 @@ const Bills = () => {
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {bills.map((bill) => (
-                        <BillCardFull key={bill._id} bill={bill} onDetails={() => navigate(`/billsDetails/${bill._id}`)} />
+                        <BillCardFull key={bill._id} bill={bill} />
                     ))}
                 </div>
             )}

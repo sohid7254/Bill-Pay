@@ -14,10 +14,10 @@ const Newsletter = () => {
             }}
             className="w-full py-16 px-4"
         >
-            <div className="max-w-xl mx-auto text-center rounded-md">
+            <div className="max-w-xl mx-auto text-center rounded-md text-base-content">
                 <div className="space-y-2">
-                    <h3 className="text-lg font-semibold text-gray-700 uppercase">SUBSCRIBE TO OUR</h3>
-                    <h2 className="text-3xl font-bold text-gray-900 uppercase">NEWSLETTER</h2>
+                    <h3 className="text-lg font-semibold  uppercase">SUBSCRIBE TO OUR</h3>
+                    <h2 className="text-3xl font-bold  uppercase">NEWSLETTER</h2>
                 </div>
 
                 {/* Form */}

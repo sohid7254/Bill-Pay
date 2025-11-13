@@ -4,19 +4,19 @@ import Category from "../Components/Category";
 import FeatureSection from "../Components/FeatureSection";
 import BillCard from "../Components/BillCard";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import AppStore from "../Components/AppStore";
 import NewsLater from "../Components/NewsLater";
 import { Helmet } from "@dr.pogodin/react-helmet";
 
 const Home = () => {
     const [latestBills, setLatestBills] = useState([]);
-    const navigate = useNavigate();
+    
     const [loading, setloading] = useState(true);
 
     useEffect(() => {
         setloading(true);
-        fetch("http://localhost:3000/latest-bills")
+        fetch("https://assignment10-server-beta-weld.vercel.app/latest-bills")
             .then((res) => res.json())
             .then((data) => {
                 console.log("Latest bills", data);
@@ -46,7 +46,7 @@ const Home = () => {
                     <div className=" mt-10 px-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {latestBills.map((bill) => (
-                                <BillCard key={bill._id} bill={bill} onDetails={() => navigate(`/billsDetails/${bill._id}`)}></BillCard>
+                                <BillCard key={bill._id} bill={bill} ></BillCard>
                             ))}
                         </div>
                     </div>
@@ -57,8 +57,8 @@ const Home = () => {
                     See More <FaLongArrowAltRight />
                 </Link>
             </div>
-            <AppStore/>
-            <NewsLater/>
+            <AppStore />
+            <NewsLater />
         </div>
     );
 };

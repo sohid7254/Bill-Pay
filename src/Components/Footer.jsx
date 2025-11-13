@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../assets/logo.png"
 import { SlSocialFacebook } from "react-icons/sl";
 import { GrLinkedinOption } from "react-icons/gr";
-import { FaInstagram, FaXTwitter } from "react-icons/fa6";
+import { FaGithub, FaInstagram, FaXTwitter } from "react-icons/fa6";
 import { FiMapPin } from "react-icons/fi";
 import { IoIosMailOpen } from "react-icons/io";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -35,17 +35,17 @@ const Footer = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#" className={linkClass}>
+                                <Link to={"/about"} className={linkClass}>
                                     About
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#" className={linkClass}>
+                                <Link to={"/blog"} className={linkClass}>
                                     Blog
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#" className={linkClass}>
+                                <Link to={"/contact"} className={linkClass}>
                                     Contact
                                 </Link>
                             </li>
@@ -56,12 +56,12 @@ const Footer = () => {
                         <h4 className={headingClass}>Company Policy</h4>
                         <ul className="space-y-2">
                             <li>
-                                <Link href="#" className={linkClass}>
+                                <Link to={"/terms"} className={linkClass}>
                                     Terms and Conditions
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#" className={linkClass}>
+                                <Link to={"/privacy"} className={linkClass}>
                                     Privacy Policy
                                 </Link>
                             </li>
@@ -85,7 +85,7 @@ const Footer = () => {
                             </li>
                             <li className="text-gray-400 text-sm flex items-start">
                                 <FaPhoneAlt size={18} className="mr-3 mt-1 text-gray-500" />
-                                
+
                                 <span>+8801637687254</span>
                             </li>
                         </ul>
@@ -93,12 +93,12 @@ const Footer = () => {
                     <div>
                         <h4 className={headingClass}>Social Links</h4>
                         <div className="flex items-center space-x-3">
-                            <Link href="#" className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-[#8559ff] transition duration-300">
+                            <Link to={"https://www.facebook.com/mdshahidulislam8854"} className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-[#8559ff] transition duration-300">
                                 <SlSocialFacebook size={20} />
                             </Link>
 
-                            <Link href="#" className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-[#8559ff] transition duration-300">
-                                <GrLinkedinOption size={20} />
+                            <Link to={"https://github.com/sohid7254"} className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-[#8559ff] transition duration-300">
+                                <FaGithub size={20} />
                             </Link>
 
                             <Link href="#" className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-[#8559ff] transition duration-300">

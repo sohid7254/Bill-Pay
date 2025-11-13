@@ -6,7 +6,7 @@ import Footer from "../Components/Footer";
 
 const MainLayouts = () => {
     return (
-        <div className="flex flex-col min-h-screen bg-white">
+        <div className="flex flex-col min-h-screen bg-base-200 text-base-content">
             {/* Navbar */}
             <Navbar />
 

@@ -27,12 +27,12 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path:"/user",
-                element:<User/>
+                path: "/user",
+                element: <User />,
             },
             {
                 path: "/FAQ",
-                element:<FAQ/>
+                element: <FAQ />,
             },
             {
                 path: "/login",
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/billsDetails/:id",
-                loader: ({ params }) => fetch(`http://localhost:3000/bills/${params.id}`),
+                
                 element: (
                     <PrivateRoute>
                         <BillsDetails />
@@ -65,10 +65,12 @@ const router = createBrowserRouter([
             },
             {
                 path: "/addBills",
-                element: <PrivateRoute>
-                    <AddBills/>
-                </PrivateRoute>
-            }
+                element: (
+                    <PrivateRoute>
+                        <AddBills />
+                    </PrivateRoute>
+                ),
+            },
         ],
     },
     {

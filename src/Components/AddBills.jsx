@@ -22,14 +22,14 @@ const AddBills = () => {
             addedBy: user?.email, // ✅ track which user added the bill
         };
 
-        fetch("http://localhost:3000/bills", {
+        fetch("https://assignment10-server-beta-weld.vercel.app/bills", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify(newBill),
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
+                console.log(data);
                 Swal.fire("Success!", "Bill added successfully", "success");
                 form.reset();
             })

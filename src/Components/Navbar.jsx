@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FiLogOut } from "react-icons/fi";
 import { BsList } from "react-icons/bs";
 import { AuthContext } from "../Context/AuthContext";
@@ -7,6 +7,7 @@ import { NavLink, Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 const Navbar = () => {
+    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
     const { user, signOutUser } = useContext(AuthContext);
     const [menuOpen, setMenuOpen] = useState(false);
     const navigate = useNavigate();
@@ -19,11 +20,20 @@ const Navbar = () => {
             })
             .catch((err) => console.error(err));
     };
+    useEffect(() => {
+        const html = document.querySelector("html");
+        html.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+    }, [theme]);
 
-    const linkStyle = ({ isActive }) => (isActive ? "text-[#8559ff] font-semibold" : "text-black hover:text-[#8559ff] transition");
+    const handleTheme = (checked) => {
+        setTheme(checked ? "dark" : "light");
+    };
+
+    const linkStyle = ({ isActive }) => (isActive ? "text-[#8559ff] font-semibold" : "text-base-content hover:text-[#8559ff] transition");
 
     return (
-        <nav className="sticky top-0 z-50 bg-white shadow-md">
+        <nav className="sticky top-0 z-50 bg-base-100 shadow-md">
             <div className="max-w-7xl mx-auto flex justify-between items-center py-3 px-4 md:px-4">
                 {/* Left: Logo */}
                 <Link to="/" className="flex items-center gap-2">
@@ -47,12 +57,12 @@ const Navbar = () => {
                             <NavLink to="/myBills" className={linkStyle}>
                                 My Bills
                             </NavLink>
-                            <Link to="/addBills" className={linkStyle}>
+                            <NavLink to="/addBills" className={linkStyle}>
                                 Add Bills
-                            </Link>
-                            <Link to="/user" className={linkStyle}>
+                            </NavLink>
+                            <NavLink to="/user" className={linkStyle}>
                                 User
-                            </Link>
+                            </NavLink>
                         </>
                     )}
                 </div>
@@ -61,6 +71,7 @@ const Navbar = () => {
                 <div className="hidden md:flex items-center gap-6">
                     {user ? (
                         <>
+                            <input onChange={(e) => handleTheme(e.target.checked)} type="checkbox" defaultChecked={localStorage.getItem("theme") === "dark"} className="toggle" />
                             {/* User Image with Tooltip */}
                             <div className="relative group">
                                 <img src={user?.photoURL || "https://i.ibb.co/MBtjqXQ/user.png"} alt="User" className="w-9 h-9 rounded-full border-2 border-[#8559ff]" />
@@ -75,16 +86,17 @@ const Navbar = () => {
                                 </span>
                             </div>
 
-                            <button onClick={handleLogout} className="flex items-center gap-1 text-black font-semibold hover:text-[#8559ff] transition">
+                            <button onClick={handleLogout} className="flex items-center gap-1 text-base-content font-semibold hover:text-[#8559ff] transition">
                                 <FiLogOut /> Logout
                             </button>
                         </>
                     ) : (
                         <>
-                            <NavLink to="/login" className={({ isActive }) => (isActive ? "text-[#8559ff] font-bold" : "text-black font-bold hover:text-[#8559ff]")}>
+                            <input onChange={(e) => handleTheme(e.target.checked)} type="checkbox" defaultChecked={localStorage.getItem("theme") === "dark"} className="toggle" />
+                            <NavLink to="/login" className={({ isActive }) => (isActive ? "text-[#8559ff] font-bold" : "text-base-content font-bold hover:text-[#8559ff]")}>
                                 Login
                             </NavLink>
-                            <NavLink to="/register" className={({ isActive }) => (isActive ? "text-[#8559ff] font-bold" : "text-black font-bold hover:text-[#8559ff]")}>
+                            <NavLink to="/register" className={({ isActive }) => (isActive ? "text-[#8559ff] font-bold" : "text-base-content font-bold hover:text-[#8559ff]")}>
                                 Register
                             </NavLink>
                         </>
@@ -108,17 +120,17 @@ const Navbar = () => {
                         </div>
                     ) : (
                         <>
-                            <NavLink to="/login" className={({ isActive }) => (isActive ? "text-[#8559ff] font-semibold" : "text-black hover:text-[#8559ff] font-bold")}>
+                            <NavLink to="/login" className={({ isActive }) => (isActive ? "text-[#8559ff] font-semibold" : "text-base-content hover:text-[#8559ff] font-bold")}>
                                 Login
                             </NavLink>
-                            <NavLink to="/register" className={({ isActive }) => (isActive ? "text-[#8559ff] font-semibold" : "text-black font-bold hover:text-[#8559ff]")}>
+                            <NavLink to="/register" className={({ isActive }) => (isActive ? "text-[#8559ff] font-semibold" : "text-base-content font-bold hover:text-[#8559ff]")}>
                                 Register
                             </NavLink>
                         </>
                     )}
 
                     {/* Menu Button */}
-                    <button onClick={() => setMenuOpen(!menuOpen)} className={`text-3xl transition-colors duration-200 ${menuOpen ? "text-[#8559ff]" : "text-black hover:text-[#8559ff]"}`}>
+                    <button onClick={() => setMenuOpen(!menuOpen)} className={`text-3xl transition-colors duration-200 ${menuOpen ? "text-[#8559ff]" : "text-base-content hover:text-[#8559ff]"}`}>
                         <BsList />
                     </button>
                 </div>
@@ -126,7 +138,7 @@ const Navbar = () => {
 
             {/* Mobile Dropdown Menu */}
             {menuOpen && (
-                <div className="absolute right-4 mt-2 bg-white rounded-lg py-3 px-6 border border-gray-100">
+                <div className="absolute bg-base-100 right-4 mt-2 text-base-content rounded-lg py-3 px-6 border border-gray-100">
                     <div className="flex flex-col items-center space-y-2 text-[15px] font-medium">
                         <NavLink to="/" className={linkStyle} onClick={() => setMenuOpen(false)}>
                             Home
@@ -134,6 +146,7 @@ const Navbar = () => {
                         <NavLink to="/bills" className={linkStyle} onClick={() => setMenuOpen(false)}>
                             Bills
                         </NavLink>
+                        <input onChange={(e) => handleTheme(e.target.checked)} type="checkbox" defaultChecked={localStorage.getItem("theme") === "dark"} className="toggle" />
                         {user && (
                             <NavLink to="/mypaybills" className={linkStyle} onClick={() => setMenuOpen(false)}>
                                 My Bills
@@ -145,7 +158,7 @@ const Navbar = () => {
                                     handleLogout();
                                     setMenuOpen(false);
                                 }}
-                                className="flex items-center gap-1 text-black hover:text-red-500 transition"
+                                className="flex items-center gap-1 text-base-content hover:text-red-500 transition"
                             >
                                 <FiLogOut /> Logout
                             </button>

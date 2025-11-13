@@ -4,27 +4,28 @@ import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { Helmet } from "@dr.pogodin/react-helmet";
 
 const MyBills = () => {
     const { user } = use(AuthContext);
     const [myBills, setMyBills] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedBill, setSelectedBill] = useState(null)
+    const [selectedBill, setSelectedBill] = useState(null);
 
     const totalAmount = myBills.reduce((sum, bill) => sum + Number(bill.amount), 0);
 
     const openUpdateModal = (bill) => {
-    setSelectedBill(bill);
-    document.getElementById("update_modal").showModal();
-  };
-  const openDeleteModal = (id) => {
-      setSelectedBill({ _id: id });
-      document.getElementById("delete_modal").showModal();
-  };
+        setSelectedBill(bill);
+        document.getElementById("update_modal").showModal();
+    };
+    const openDeleteModal = (id) => {
+        setSelectedBill({ _id: id });
+        document.getElementById("delete_modal").showModal();
+    };
 
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:3000/payments?email=${user.email}`)
+            fetch(`https://assignment10-server-beta-weld.vercel.app/payments?email=${user.email}`)
                 .then((res) => res.json())
                 .then((data) => {
                     setMyBills(data);
@@ -36,76 +37,72 @@ const MyBills = () => {
                 });
         }
     }, [user]);
-    
-    const handleUpdate = (e) =>{
-        e.preventDefault()
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
         const updateBill = {
             amount: e.target.amount.value,
             address: e.target.address.value,
             phone: e.target.phone.value,
             date: e.target.date.value,
-        }
+        };
 
-        fetch(`http://localhost:3000/payments/${selectedBill._id}`,{
+        fetch(`https://assignment10-server-beta-weld.vercel.app/payments/${selectedBill._id}`, {
             method: "PUT",
             headers: {
-                "content-type" : "application/json"
+                "content-type": "application/json",
             },
-            body: JSON.stringify(updateBill)
+            body: JSON.stringify(updateBill),
         })
-            .then(res => res.json())
+            .then((res) => res.json())
             .then(() => {
                 document.getElementById("update_modal").close();
-                Swal.fire("Updated","Bill updated successfully", "success")
-                setMyBills(prev => prev.map(b => (b._id === selectedBill._id ? {...b, ...updateBill} : b)))
-            })
-    }
+                Swal.fire("Updated", "Bill updated successfully", "success");
+                setMyBills((prev) => prev.map((b) => (b._id === selectedBill._id ? { ...b, ...updateBill } : b)));
+            });
+    };
 
     const confirmDelete = () => {
-        fetch(`http://localhost:3000/payments/${selectedBill._id}`, {
-            method: "Delete"
+        fetch(`https://assignment10-server-beta-weld.vercel.app/payments/${selectedBill._id}`, {
+            method: "Delete",
         })
-          .then(res => res.json())
-          .then(() => {
-            document.getElementById("delete_modal").close();
-            Swal.fire("Deleted", "Bill Sucessfully deleted fron DB", "success")
-            setMyBills((prev) => prev.filter((b) => b._id !== selectedBill._id));
-            
-          })
-          .catch(err => console.error("Delete Failed check the error", err))
-    }
+            .then((res) => res.json())
+            .then(() => {
+                document.getElementById("delete_modal").close();
+                Swal.fire("Deleted", "Bill Sucessfully deleted fron DB", "success");
+                setMyBills((prev) => prev.filter((b) => b._id !== selectedBill._id));
+            })
+            .catch((err) => console.error("Delete Failed check the error", err));
+    };
 
     const downloadPDF = () => {
         const doc = new jsPDF();
 
-        
         doc.setFontSize(16);
         doc.text("My Bills Report", 14, 20);
 
-        
         const headers = [["Username", "Email", "Amount", "Address", "Phone", "Date", "Status"]];
 
-       
         const rows = myBills.map((bill) => [bill.username, bill.email, `${bill.amount}`, bill.address, bill.phone, bill.date, bill.status]);
 
-        
         autoTable(doc, {
             head: headers,
             body: rows,
             startY: 30,
         });
 
-        
         const totalAmount = myBills.reduce((sum, bill) => sum + Number(bill.amount), 0);
         doc.text(`Total Bill Paid: ${myBills.length}`, 14, doc.lastAutoTable.finalY + 10);
         doc.text(`Total Amount: ${totalAmount}`, 14, doc.lastAutoTable.finalY + 20);
 
-        
         doc.save("my_bills_report.pdf");
     };
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
+            <Helmet>
+                <title>My Bills</title>
+            </Helmet>
             <h2 className="text-2xl font-bold text-center mb-6">My Paid Bills</h2>
 
             <div className="mb-4 flex justify-between items-center">
