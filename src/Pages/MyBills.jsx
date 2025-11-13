@@ -2,6 +2,8 @@ import React, { use, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import Swal from "sweetalert2";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const MyBills = () => {
     const { user } = use(AuthContext);
@@ -14,6 +16,10 @@ const MyBills = () => {
     const openUpdateModal = (bill) => {
     setSelectedBill(bill);
     document.getElementById("update_modal").showModal();
+  };
+  const openDeleteModal = (id) => {
+      setSelectedBill({ _id: id });
+      document.getElementById("delete_modal").showModal();
   };
 
     useEffect(() => {
@@ -54,6 +60,50 @@ const MyBills = () => {
                 setMyBills(prev => prev.map(b => (b._id === selectedBill._id ? {...b, ...updateBill} : b)))
             })
     }
+
+    const confirmDelete = () => {
+        fetch(`http://localhost:3000/payments/${selectedBill._id}`, {
+            method: "Delete"
+        })
+          .then(res => res.json())
+          .then(() => {
+            document.getElementById("delete_modal").close();
+            Swal.fire("Deleted", "Bill Sucessfully deleted fron DB", "success")
+            setMyBills((prev) => prev.filter((b) => b._id !== selectedBill._id));
+            
+          })
+          .catch(err => console.error("Delete Failed check the error", err))
+    }
+
+    const downloadPDF = () => {
+        const doc = new jsPDF();
+
+        
+        doc.setFontSize(16);
+        doc.text("My Bills Report", 14, 20);
+
+        
+        const headers = [["Username", "Email", "Amount", "Address", "Phone", "Date", "Status"]];
+
+       
+        const rows = myBills.map((bill) => [bill.username, bill.email, `${bill.amount}`, bill.address, bill.phone, bill.date, bill.status]);
+
+        
+        autoTable(doc, {
+            head: headers,
+            body: rows,
+            startY: 30,
+        });
+
+        
+        const totalAmount = myBills.reduce((sum, bill) => sum + Number(bill.amount), 0);
+        doc.text(`Total Bill Paid: ${myBills.length}`, 14, doc.lastAutoTable.finalY + 10);
+        doc.text(`Total Amount: ${totalAmount}`, 14, doc.lastAutoTable.finalY + 20);
+
+        
+        doc.save("my_bills_report.pdf");
+    };
+
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
             <h2 className="text-2xl font-bold text-center mb-6">My Paid Bills</h2>
@@ -109,7 +159,9 @@ const MyBills = () => {
                                         <button onClick={() => openUpdateModal(bill)} className="btn btn-sm btn-info">
                                             Update
                                         </button>
-                                        <button className="btn btn-sm btn-error">Delete</button>
+                                        <button onClick={() => openDeleteModal(bill._id)} className="btn btn-sm btn-error">
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
@@ -117,6 +169,13 @@ const MyBills = () => {
                     </table>
                 </div>
             )}
+
+            <div className="mt-5">
+                <button onClick={downloadPDF} className="btn bg-[#8559ff] text-white">
+                    Download Report
+                </button>
+            </div>
+            {/*  Update Modal */}
             <dialog id="update_modal" className="modal">
                 <div className="modal-box">
                     <h3 className="font-bold text-lg mb-4">Update Bill</h3>
@@ -133,6 +192,22 @@ const MyBills = () => {
                     <div className="modal-action">
                         <form method="dialog">
                             <button className="btn btn-outline w-full">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+            {/* Confirmation Delete Modal */}
+            <dialog id="delete_modal" className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg mb-4">Confirm Delete</h3>
+                    <p>Are you sure you want to delete this bill?</p>
+                    <div className="modal-action flex gap-2">
+                        <button onClick={confirmDelete} className="btn btn-error">
+                            Yes, Delete
+                        </button>
+
+                        <form method="dialog">
+                            <button className="btn btn-outline">Cancel</button>
                         </form>
                     </div>
                 </div>
