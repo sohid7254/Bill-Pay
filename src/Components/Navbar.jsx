@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { useContext, useState } from "react";
 import { FiLogOut } from "react-icons/fi";
 import { BsList } from "react-icons/bs";
 import { AuthContext } from "../Context/AuthContext";
@@ -7,14 +7,14 @@ import { NavLink, Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 const Navbar = () => {
-    const { user, signOutUser } = use(AuthContext);
+    const { user, signOutUser } = useContext(AuthContext);
     const [menuOpen, setMenuOpen] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         signOutUser()
             .then(() => {
-                Swal.fire("You have successfully loged out", "", "success");
+                Swal.fire("You have successfully logged out", "", "success");
                 navigate("/");
             })
             .catch((err) => console.error(err));
@@ -24,7 +24,7 @@ const Navbar = () => {
 
     return (
         <nav className="sticky top-0 z-50 bg-white shadow-md">
-            <div className=" max-w-7xl mx-auto flex justify-between items-center py-3 px-4 md:px-4">
+            <div className="max-w-7xl mx-auto flex justify-between items-center py-3 px-4 md:px-4">
                 {/* Left: Logo */}
                 <Link to="/" className="flex items-center gap-2">
                     <img src={logo} alt="Logo" className="w-20 h-10" />
@@ -44,19 +44,16 @@ const Navbar = () => {
 
                     {user && (
                         <>
-                        <NavLink to="/myBills" className={linkStyle}>
-                            My Bills
-                        </NavLink>
-
-                        <Link to="/addBills" className={linkStyle}>
-                            Add Bills
-                        </Link>
-                        <Link to="/user" className={linkStyle}>
-                            User
-                        </Link>
-                        
+                            <NavLink to="/myBills" className={linkStyle}>
+                                My Bills
+                            </NavLink>
+                            <Link to="/addBills" className={linkStyle}>
+                                Add Bills
+                            </Link>
+                            <Link to="/user" className={linkStyle}>
+                                User
+                            </Link>
                         </>
-                        
                     )}
                 </div>
 
@@ -64,7 +61,20 @@ const Navbar = () => {
                 <div className="hidden md:flex items-center gap-6">
                     {user ? (
                         <>
-                            <img src={user?.photoURL || "https://i.ibb.co/MBtjqXQ/user.png"} alt="User" className="w-9 h-9 rounded-full border-2 border-[#8559ff]" />
+                            {/* User Image with Tooltip */}
+                            <div className="relative group">
+                                <img src={user?.photoURL || "https://i.ibb.co/MBtjqXQ/user.png"} alt="User" className="w-9 h-9 rounded-full border-2 border-[#8559ff]" />
+                                <span
+                                    className="absolute top-8 left-1/2 -translate-x-1/2 
+                                         bg-white/20 backdrop-blur-md  text-xs font-medium 
+                                            rounded-lg px-3 py-1 shadow-md
+                                            opacity-0 group-hover:opacity-100 
+                                         "
+                                >
+                                    {user?.displayName || "User"}
+                                </span>
+                            </div>
+
                             <button onClick={handleLogout} className="flex items-center gap-1 text-black font-semibold hover:text-[#8559ff] transition">
                                 <FiLogOut /> Logout
                             </button>
@@ -83,9 +93,19 @@ const Navbar = () => {
 
                 {/* Mobile: Right side */}
                 <div className="md:hidden flex items-center gap-3">
-                    {/* User Image or Login/Register (mobile topbar only) */}
                     {user ? (
-                        <img src={user?.photoURL || "https://i.ibb.co/MBtjqXQ/user.png"} alt="User" className="w-8 h-8 rounded-full border border-[#8559ff]" />
+                        <div className="relative group">
+                            <img src={user?.photoURL || "https://i.ibb.co/MBtjqXQ/user.png"} alt="User" className="w-8 h-8 rounded-full border border-[#8559ff]" />
+                            <span
+                                className="absolute top-8 left-1/2 -translate-x-1/2 
+                                         bg-white/20 backdrop-blur-md  text-xs font-medium 
+                                            rounded-lg px-3 py-1 shadow-md
+                                            opacity-0 group-hover:opacity-100 
+                                         "
+                            >
+                                {user?.displayName || "User"}
+                            </span>
+                        </div>
                     ) : (
                         <>
                             <NavLink to="/login" className={({ isActive }) => (isActive ? "text-[#8559ff] font-semibold" : "text-black hover:text-[#8559ff] font-bold")}>

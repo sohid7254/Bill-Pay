@@ -1,5 +1,6 @@
 import React, { use } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import { Helmet } from "@dr.pogodin/react-helmet";
 
 const User = () => {
     const { user } = use(AuthContext);
@@ -14,6 +15,9 @@ const User = () => {
 
     return (
         <div className="max-w-3xl mx-auto p-6 mt-10 bg-base-100 shadow-lg rounded-lg">
+            <Helmet>
+                <title>{user.displayName}-Profile</title>
+            </Helmet>
             <h2 className="text-2xl font-bold text-center text-[#8559ff] mb-6">My Profile</h2>
 
             <div className="flex flex-col items-center gap-4">

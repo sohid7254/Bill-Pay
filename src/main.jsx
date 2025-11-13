@@ -15,6 +15,7 @@ import MyBills from "./Pages/MyBills";
 import AddBills from "./Components/AddBills";
 import User from "./Pages/User";
 import FAQ from "./Pages/FAQ";
+import { HelmetProvider } from "@dr.pogodin/react-helmet";
 
 const router = createBrowserRouter([
     {
@@ -79,7 +80,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
     <StrictMode>
         <AuthProvider>
-            <RouterProvider router={router} />
+            <HelmetProvider>
+                <RouterProvider router={router} />
+            </HelmetProvider>
         </AuthProvider>
     </StrictMode>
 );

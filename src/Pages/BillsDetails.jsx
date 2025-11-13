@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { AuthContext } from '../Context/AuthContext';
 import Swal from 'sweetalert2';
 import { FaBangladeshiTakaSign } from 'react-icons/fa6';
+import { Helmet } from '@dr.pogodin/react-helmet';
 
 
 const BillsDetails = () => {
@@ -66,6 +67,9 @@ const BillsDetails = () => {
     }
     return (
         <div className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative">
+            <Helmet>
+                <title>{bill.title}</title>
+            </Helmet>
             {/* Left Side - Image */}
             {bill.image && (
                 <div>

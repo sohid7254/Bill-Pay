@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import Swal from "sweetalert2";
+import { Helmet } from "@dr.pogodin/react-helmet";
 
 const AddBills = () => {
     const { user } = useContext(AuthContext);
@@ -40,6 +41,9 @@ const AddBills = () => {
 
     return (
         <div className="max-w-3xl mx-auto p-6 shadow-lg bg-base-100 rounded mt-10">
+            <Helmet>
+                <title>Add-Bills</title>
+            </Helmet>
             <h2 className="text-2xl font-bold mb-6 text-center text-[#8559ff]">Add New Bill</h2>
             <form onSubmit={handleAddBill} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">

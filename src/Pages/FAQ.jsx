@@ -1,8 +1,12 @@
+import { Helmet } from "@dr.pogodin/react-helmet";
 import React from "react";
 
 const FAQ = () => {
     return (
         <div className="max-w-4xl mx-auto p-6 mt-10 bg-base-100 shadow-lg rounded-lg">
+            <Helmet>
+                <title>FAQ</title>
+            </Helmet>
             <h2 className="text-3xl font-bold text-center text-[#8559ff] mb-8">Frequently Asked Questions</h2>
 
             <div className="space-y-6">

@@ -5,6 +5,9 @@ import FeatureSection from "../Components/FeatureSection";
 import BillCard from "../Components/BillCard";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
+import AppStore from "../Components/AppStore";
+import NewsLater from "../Components/NewsLater";
+import { Helmet } from "@dr.pogodin/react-helmet";
 
 const Home = () => {
     const [latestBills, setLatestBills] = useState([]);
@@ -27,6 +30,9 @@ const Home = () => {
     }, []);
     return (
         <div>
+            <Helmet>
+                <title>Home-Bills Management System</title>
+            </Helmet>
             <Banner />
             <FeatureSection />
             <Category />
@@ -51,6 +57,8 @@ const Home = () => {
                     See More <FaLongArrowAltRight />
                 </Link>
             </div>
+            <AppStore/>
+            <NewsLater/>
         </div>
     );
 };

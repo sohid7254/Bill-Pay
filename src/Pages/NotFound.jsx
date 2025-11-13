@@ -1,9 +1,13 @@
 import React from 'react';
 import image from "../assets/404page.jpg"
 import { Link } from 'react-router';
+import { Helmet } from '@dr.pogodin/react-helmet';
 const NotFound = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-[#f5f5f5]  p-4 font-sans ">
+            <Helmet>
+                <title>Not Found Page</title>
+            </Helmet>
             <div className="max-w-xl w-full p-8 sm:p-10 text-center transition-colors duration-500">
                 <div className="mb-3">
                     <img src={image} alt="" />

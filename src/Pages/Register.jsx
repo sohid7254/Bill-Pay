@@ -3,6 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 import Swal from "sweetalert2";
+import { Helmet } from "@dr.pogodin/react-helmet";
 
 const Register = () => {
     const {createUser, updateUser, googleLogin} = use(AuthContext)
@@ -80,6 +81,11 @@ const Register = () => {
     }
     return (
         <div className="max-w-md mx-auto mt-10 p-6 shadow-lg bg-base-100 rounded">
+            <Helmet>
+                <title>
+                    Register
+                </title>
+            </Helmet>
             <h2 className="text-2xl font-bold mb-4 text-center">Register to Brgin!!</h2>
             <form onSubmit={handleRegister}>
                 <label className="text-xl font-semibold">Name:</label>

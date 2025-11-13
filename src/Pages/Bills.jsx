@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router";
 import BillCardFull from "../Components/BillCardFull";
+import { Helmet } from "@dr.pogodin/react-helmet";
 
 const Bills = () => {
     const [bills, setBills] = useState([]);
@@ -34,6 +35,9 @@ const Bills = () => {
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
+            <Helmet>
+                <title>Bills</title>
+            </Helmet>
             <h2 className="text-2xl font-bold text-center mb-6">All Bills</h2>
 
             {/* Category Filter */}

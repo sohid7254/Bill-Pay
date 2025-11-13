@@ -3,6 +3,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../Context/AuthContext';
 import Swal from 'sweetalert2';
+import { Helmet } from '@dr.pogodin/react-helmet';
 
 const LogIn = () => {
     const {signIn, googleLogin} = use(AuthContext)
@@ -36,6 +37,9 @@ const LogIn = () => {
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 shadow-md bg-base-100 rounded">
+            <Helmet>
+                <title>LogIn-Page</title>
+            </Helmet>
             <h2 className="text-2xl  font-bold mb-4 text-center">Login to your Account!</h2>
             <form onSubmit={handleLogIn}>
                 <label className="text-xl font-semibold">Your Email:</label>
