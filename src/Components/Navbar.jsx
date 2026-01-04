@@ -53,17 +53,9 @@ const Navbar = () => {
                     </NavLink>
 
                     {user && (
-                        <>
-                            <NavLink to="/myBills" className={linkStyle}>
-                                My Bills
-                            </NavLink>
-                            <NavLink to="/addBills" className={linkStyle}>
-                                Add Bills
-                            </NavLink>
-                            <NavLink to="/user" className={linkStyle}>
-                                User
-                            </NavLink>
-                        </>
+                        <NavLink to="/dashboard" className={linkStyle}>
+                            Dashboard
+                        </NavLink>
                     )}
                 </div>
 
@@ -148,8 +140,8 @@ const Navbar = () => {
                         </NavLink>
                         <input onChange={(e) => handleTheme(e.target.checked)} type="checkbox" defaultChecked={localStorage.getItem("theme") === "dark"} className="toggle" />
                         {user && (
-                            <NavLink to="/mypaybills" className={linkStyle} onClick={() => setMenuOpen(false)}>
-                                My Bills
+                            <NavLink to="/dashboard" className={linkStyle} onClick={() => setMenuOpen(false)}>
+                                Dashboard
                             </NavLink>
                         )}
                         {user && (

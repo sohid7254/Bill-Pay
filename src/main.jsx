@@ -20,6 +20,9 @@ import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import Terms from "./Pages/Terms";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
+import DashboardLayout from "./Layout/DashboardLayout";
+import DashboardHome from "./Pages/Dashboard/DashboardHome";
+import Profile from "./Pages/Dashboard/Profile";
 
 const router = createBrowserRouter([
     {
@@ -31,8 +34,20 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path: "/user",
-                element: <User />,
+                path: "/about",
+                element: <About />,
+            },
+            {
+                path: "/contact",
+                element: <Contact />,
+            },
+            {
+                path: "/terms",
+                element: <Terms />,
+            },
+            {
+                path: "/privacy",
+                element: <PrivacyPolicy />,
             },
             {
                 path: "/FAQ",
@@ -55,37 +70,31 @@ const router = createBrowserRouter([
 
                 element: <BillsDetails />,
             },
+        ],
+    },
+    {
+        path: "/dashboard",
+        element: (
+            <PrivateRoute>
+                <DashboardLayout />
+            </PrivateRoute>
+        ),
+        children: [
             {
-                path: "/myBills",
-                element: (
-                    <PrivateRoute>
-                        <MyBills />
-                    </PrivateRoute>
-                ),
+                index: true,
+                element: <DashboardHome />,
             },
             {
-                path: "/addBills",
-                element: (
-                    <PrivateRoute>
-                        <AddBills />
-                    </PrivateRoute>
-                ),
+                path: "my-bills",
+                element: <MyBills />,
             },
             {
-                path: "/about",
-                element: <About />,
+                path: "add-bills",
+                element: <AddBills />,
             },
             {
-                path: "/contact",
-                element: <Contact />,
-            },
-            {
-                path: "/terms",
-                element: <Terms />,
-            },
-            {
-                path: "/privacy",
-                element: <PrivacyPolicy />,
+                path: "profile",
+                element: <Profile />,
             },
         ],
     },
