@@ -16,6 +16,10 @@ import AddBills from "./Components/AddBills";
 import User from "./Pages/User";
 import FAQ from "./Pages/FAQ";
 import { HelmetProvider } from "@dr.pogodin/react-helmet";
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
+import Terms from "./Pages/Terms";
+import PrivacyPolicy from "./Pages/PrivacyPolicy";
 
 const router = createBrowserRouter([
     {
@@ -66,6 +70,22 @@ const router = createBrowserRouter([
                         <AddBills />
                     </PrivateRoute>
                 ),
+            },
+            {
+                path: "/about",
+                element: <About />,
+            },
+            {
+                path: "/contact",
+                element: <Contact />,
+            },
+            {
+                path: "/terms",
+                element: <Terms />,
+            },
+            {
+                path: "/privacy",
+                element: <PrivacyPolicy />,
             },
         ],
     },
