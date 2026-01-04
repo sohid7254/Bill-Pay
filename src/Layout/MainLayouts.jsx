@@ -11,7 +11,7 @@ const MainLayouts = () => {
             <Navbar />
 
             {/* Main Content - grows to fill available space */}
-            <main className="grow">
+            <main className="grow ">
                 <div className="max-w-7xl mx-auto px-4 ">
                     <Outlet />
                 </div>

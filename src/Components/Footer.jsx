@@ -39,11 +39,7 @@ const Footer = () => {
                                     About
                                 </Link>
                             </li>
-                            <li>
-                                <Link to={"/blog"} className={linkClass}>
-                                    Blog
-                                </Link>
-                            </li>
+                           
                             <li>
                                 <Link to={"/contact"} className={linkClass}>
                                     Contact

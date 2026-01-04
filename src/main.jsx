@@ -48,12 +48,8 @@ const router = createBrowserRouter([
             },
             {
                 path: "/billsDetails/:id",
-                
-                element: (
-                    <PrivateRoute>
-                        <BillsDetails />
-                    </PrivateRoute>
-                ),
+
+                element: <BillsDetails />,
             },
             {
                 path: "/myBills",

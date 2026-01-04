@@ -16,7 +16,7 @@ const Home = () => {
 
     useEffect(() => {
         setloading(true);
-        fetch("https://assignment10-server-beta-weld.vercel.app/latest-bills")
+        fetch("http://localhost:3000/latest-bills")
             .then((res) => res.json())
             .then((data) => {
                 console.log("Latest bills", data);
@@ -44,7 +44,7 @@ const Home = () => {
                     </div>
                 ) : (
                     <div className=" mt-10 px-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {latestBills.map((bill) => (
                                 <BillCard key={bill._id} bill={bill} ></BillCard>
                             ))}
