@@ -8,6 +8,7 @@ import { Helmet } from "@dr.pogodin/react-helmet";
 const BillsDetails = () => {
     const { id } = useParams();
     const [bill, setBill] = useState(null);
+    const [isPaid, setIsPaid] = useState(false);
 
     const { user } = use(AuthContext);
 
@@ -18,7 +19,18 @@ const BillsDetails = () => {
                 setBill(data);
             })
             .catch((err) => console.error(err.message));
-    }, [id]);
+
+        // Check if user has already paid this bill
+        if (user?.email) {
+            fetch(`https://assignment10-server-beta-weld.vercel.app/payments?email=${user.email}`)
+                .then((res) => res.json())
+                .then((payments) => {
+                    const hasPaid = payments.some((payment) => payment.billId === id);
+                    setIsPaid(hasPaid);
+                })
+                .catch((err) => console.error("Error checking payment status:", err));
+        }
+    }, [id, user?.email]);
 
     if (!bill) {
         return (
@@ -56,6 +68,7 @@ const BillsDetails = () => {
             .then((res) => res.json())
             .then(() => {
                 document.getElementById("pay_modal").close();
+                setIsPaid(true); // Update local state immediately
                 Swal.fire("Success", "Bill Paid Successfully", "success");
             })
             .catch((err) => console.error(err));
@@ -98,7 +111,11 @@ const BillsDetails = () => {
 
                 {/* Pay Bill Button */}
                 <div className="mt-6">
-                    {isCurrentMonth ? (
+                    {isPaid ? (
+                        <button disabled className="btn btn-disabled w-full md:w-auto bg-green-100 text-green-700 border-green-200">
+                            Paid
+                        </button>
+                    ) : isCurrentMonth ? (
                         <button onClick={() => document.getElementById("pay_modal").showModal()} className="btn bg-[#f3edff] text-black w-full md:w-50 hover:bg-[#af85ff]">
                             Pay Bill
                         </button>
