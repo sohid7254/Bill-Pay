@@ -16,7 +16,7 @@ const Home = () => {
 
     useEffect(() => {
         setloading(true);
-        fetch("http://localhost:3000/latest-bills")
+        fetch("https://assignment10-server-beta-weld.vercel.app/latest-bills")
             .then((res) => res.json())
             .then((data) => {
                 console.log("Latest bills", data);
