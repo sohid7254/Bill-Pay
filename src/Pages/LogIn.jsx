@@ -1,51 +1,53 @@
-import React, { use, useState } from 'react';
-import { FcGoogle } from 'react-icons/fc';
-import { Link, useLocation, useNavigate } from 'react-router';
-import { AuthContext } from '../Context/AuthContext';
-import Swal from 'sweetalert2';
-import { Helmet } from '@dr.pogodin/react-helmet';
+import React, { useState, useContext } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { Link, useLocation, useNavigate } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
+import Swal from "sweetalert2";
+import { Helmet } from "@dr.pogodin/react-helmet";
 
 const LogIn = () => {
-    const {signIn, googleLogin} = use(AuthContext)
-    const [error, setError] = useState("")
+    const { signIn, googleLogin } = useContext(AuthContext);
+    const [error, setError] = useState("");
+
+    // 🔑 Default demo credentials (auto-fill)
+    const [email, setEmail] = useState("user@gmail.com");
+    const [password, setPassword] = useState("User123");
+
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
     const handleLogIn = (e) => {
         e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.password.value;
 
         signIn(email, password)
             .then(() => {
-                Swal.fire("LogIn Successfull!", "", "success");
-                navigate(from, {replace: true})
+                Swal.fire("Login Successful!", "", "success");
+                navigate(from, { replace: true });
             })
-            .catch(err => setError(err.message))
-    }
+            .catch((err) => setError(err.message));
+    };
 
-    const handleGoogleLogIn = () =>{
+    const handleGoogleLogIn = () => {
         googleLogin()
             .then(() => {
-                Swal.fire("Google LogIn Successfull", "", "success")
-                navigate(from, {replace:true})
+                Swal.fire("Google Login Successful", "", "success");
+                navigate(from, { replace: true });
             })
-            .catch(err => setError(err.message))
-    }
-
+            .catch((err) => setError(err.message));
+    };
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 shadow-md bg-base-100 rounded">
             <Helmet>
                 <title>LogIn-Page</title>
             </Helmet>
-            <h2 className="text-2xl  font-bold mb-4 text-center">Login to your Account!</h2>
+            <h2 className="text-2xl font-bold mb-4 text-center">Login to your Account!</h2>
             <form onSubmit={handleLogIn}>
                 <label className="text-xl font-semibold">Your Email:</label>
-                <input type="email" name="email" placeholder="Email" className="input input-bordered w-full mb-3" required />
+                <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="input input-bordered w-full mb-3" required />
                 <label className="text-xl font-semibold">Your Password:</label>
-                <input type="password" name="password" placeholder="*******" className="input input-bordered w-full mb-3" required />
+                <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="*******" className="input input-bordered w-full mb-3" required />
                 <button type="submit" className="btn text-white bg-[#8f6ded] w-full hover:bg-[#b09adc]">
                     Login
                 </button>
@@ -55,9 +57,7 @@ const LogIn = () => {
                 <p>
                     Forgot Your Password! <span className="text-purple-500">Reset Password</span>
                 </p>
-                <span>
-                    Or
-                </span>
+                <span>Or</span>
             </div>
             <div className="text-center">
                 <p>
